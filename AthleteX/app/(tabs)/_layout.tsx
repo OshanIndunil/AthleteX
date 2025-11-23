@@ -9,7 +9,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <Feather name="home" size={24} color={color} />,
-          headerShown: false, // Hide header because we made a custom one
+          headerShown: false, 
         }}
       />
       <Tabs.Screen

@@ -11,7 +11,7 @@ export default function FavoritesScreen() {
   const router = useRouter();
 
   const goToDetails = (item: any) => {
-    // 1. FIX: Ensure we generate the correct URL if it's missing
+    
     const badgeUrl = item.strTeamBadge || item.strBadge || `https://www.thesportsdb.com/images/media/team/badge/${item.idTeam}.png`;
     const itemWithBadge = { ...item, strTeamBadge: badgeUrl };
 
@@ -33,13 +33,13 @@ export default function FavoritesScreen() {
           data={favorites}
           keyExtractor={(item: any) => item.idTeam}
           renderItem={({ item }: { item: any }) => {
-            // 2. FIX: Apply the same fallback logic here for the list item
+            
             const badgeUrl = item.strTeamBadge || item.strBadge || `https://www.thesportsdb.com/images/media/team/badge/${item.idTeam}.png`;
 
             return (
                 <TouchableOpacity onPress={() => goToDetails(item)} activeOpacity={0.9}>
                     <View style={styles.card}>
-                    {/* Use 'badgeUrl' instead of 'item.strTeamBadge' */}
+                   
                     <Image source={{ uri: badgeUrl }} style={styles.image} resizeMode="contain" />
                     
                     <View style={styles.info}>

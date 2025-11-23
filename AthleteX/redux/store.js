@@ -1,7 +1,7 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// --- 1. Authentication Slice (For User Login) ---
+//Authentication Slice (For User Login) 
 const authSlice = createSlice({
   name: 'auth',
   initialState: { user: null, token: null },
@@ -28,7 +28,7 @@ const authSlice = createSlice({
   },
 });
 
-// --- 2. Favorites Slice (For Saving Sports Teams) ---
+//Favorites Slice (For Saving Sports Teams) 
 const favoritesSlice = createSlice({
   name: 'favorites',
   initialState: { items: [] },

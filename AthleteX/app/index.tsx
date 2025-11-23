@@ -33,7 +33,7 @@ export default function LoginScreen() {
     const usernameInput = data.username.trim();
     const passwordInput = data.password.trim();
 
-    // --- SUPER USER ---
+    //SUPER USER
     if (usernameInput.toLowerCase() === 'oshan' && passwordInput === 'Test#123') {
         const adminUser = {
             id: 999,
@@ -53,7 +53,7 @@ export default function LoginScreen() {
         return; 
     }
 
-    // --- API LOGIN ---
+    //API LOGIN
     try {
       const response = await axios.post('https://dummyjson.com/auth/login', {
         username: usernameInput, 
