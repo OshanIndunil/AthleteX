@@ -39,31 +39,24 @@ export default function RegisterScreen() {
             image: 'https://cdn-icons-png.flaticon.com/512/149/149071.png' 
         };
 
-        console.log("Register Success!");
         dispatch(loginSuccess({ user: dummyUser, token: 'dummy-register-token' }));
-
         Alert.alert("Welcome!", "Account created successfully.");
         
         setTimeout(() => {
             setLoading(false);
-            router.replace('/(tabs)');
+            router.replace('/home');
         }, 500);
     }, 1500);
   };
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
-    >
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <LinearGradient colors={['#007bff', '#0056b3']} style={styles.header}>
-             <Image 
-                source={{ uri: 'https://cdn-icons-png.flaticon.com/512/747/747376.png' }} 
-                style={styles.logo} 
-             />
+             <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/747/747376.png' }} style={styles.logo} />
              <Text style={styles.headerTitle}>Create Account</Text>
-             <Text style={styles.headerSubtitle}>Join Sportify today!</Text>
+             {/* UPDATED TEXT HERE */}
+             <Text style={styles.headerSubtitle}>Join AthleteX today!</Text>
         </LinearGradient>
 
         <View style={styles.formContainer}>
@@ -74,13 +67,7 @@ export default function RegisterScreen() {
                     control={control}
                     name="fullName"
                     render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.input}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        placeholder="John Doe"
-                    />
+                    <TextInput style={styles.input} onBlur={onBlur} onChangeText={onChange} value={value} placeholder="John Doe" />
                     )}
                 />
             </View>
@@ -93,15 +80,7 @@ export default function RegisterScreen() {
                     control={control}
                     name="email"
                     render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.input}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        placeholder="john@example.com"
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                    />
+                    <TextInput style={styles.input} onBlur={onBlur} onChangeText={onChange} value={value} placeholder="john@example.com" keyboardType="email-address" autoCapitalize="none" />
                     )}
                 />
             </View>
@@ -114,14 +93,7 @@ export default function RegisterScreen() {
                     control={control}
                     name="password"
                     render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.input}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        placeholder="******"
-                        secureTextEntry
-                    />
+                    <TextInput style={styles.input} onBlur={onBlur} onChangeText={onChange} value={value} placeholder="******" secureTextEntry />
                     )}
                 />
             </View>
@@ -134,14 +106,7 @@ export default function RegisterScreen() {
                     control={control}
                     name="confirmPassword"
                     render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.input}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        placeholder="******"
-                        secureTextEntry
-                    />
+                    <TextInput style={styles.input} onBlur={onBlur} onChangeText={onChange} value={value} placeholder="******" secureTextEntry />
                     )}
                 />
             </View>

@@ -1,21 +1,21 @@
 import { Stack } from 'expo-router';
 import { Provider } from 'react-redux';
-import { store } from '../redux/store'; // Ensure path is correct
+import { store } from '../redux/store'; 
 
 export default function Layout() {
   return (
     <Provider store={store}>
       <Stack screenOptions={{ headerShown: false }}>
-        {/* The Login Screen (app/index.tsx) */}
+        {/* The Login Screen */}
         <Stack.Screen name="index" />
         
-        {/* The Register Screen (app/register.tsx) */}
+        {/* The Register Screen */}
         <Stack.Screen name="register" />
 
-        {/* The Main App Tabs (app/(tabs)/_layout.tsx) */}
+        {/* The Main App Tabs*/}
         <Stack.Screen name="(tabs)" />
 
-        {/* The Details Screen (app/details.tsx) */}
+        {/* The Details Screen */}
         <Stack.Screen name="details" options={{ presentation: 'modal' }} />
       </Stack>
     </Provider>

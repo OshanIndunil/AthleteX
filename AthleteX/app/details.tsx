@@ -43,17 +43,14 @@ export default function DetailsScreen() {
 
   const renderHeader = () => (
     <View style={styles.headerContainer}>
-      {/* AUTOMATIC IMAGE HANDLING:
-         We try to use 'strTeamBanner'. If it is null (empty), we use 'strTeamBadge' (the logo).
-         The API provides these URLs automatically.
-      */}
+      
       <ImageBackground 
         source={{ uri: team.strTeamBanner || team.strTeamBadge }} 
         style={styles.headerBackground}
       >
         <LinearGradient colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,0.9)']} style={styles.gradient} />
         
-        {/* We also show the Logo again in the center to look nice */}
+       
         <Image source={{ uri: team.strTeamBadge }} style={styles.mainImage} resizeMode="contain" />
         
         <View style={styles.headerContent}>
@@ -142,7 +139,7 @@ export default function DetailsScreen() {
       <Stack.Screen options={{ headerShown: false }} />
       <StatusBar barStyle="light-content" />
 
-      {/* FIXED BACK BUTTON */}
+     
       <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
         <Feather name="arrow-left" size={24} color="white" />
       </TouchableOpacity>

@@ -3,11 +3,23 @@ import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleFavorite } from '../../redux/store';
 import { Feather } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 export default function FavoritesScreen() {
-  // FIX: Added ': any' so TypeScript stops complaining about 'state'
   const favorites = useSelector((state: any) => state.favorites.items);
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  const goToDetails = (item: any) => {
+    // 1. FIX: Ensure we generate the correct URL if it's missing
+    const badgeUrl = item.strTeamBadge || item.strBadge || `https://www.thesportsdb.com/images/media/team/badge/${item.idTeam}.png`;
+    const itemWithBadge = { ...item, strTeamBadge: badgeUrl };
+
+    router.push({
+        pathname: "/details",
+        params: { teamData: JSON.stringify(itemWithBadge) }
+    } as any); 
+  };
 
   return (
     <View style={styles.container}>
@@ -19,20 +31,29 @@ export default function FavoritesScreen() {
       ) : (
         <FlatList
           data={favorites}
-          // FIX: Added ': any' to item
           keyExtractor={(item: any) => item.idTeam}
-          renderItem={({ item }: { item: any }) => (
-            <View style={styles.card}>
-              <Image source={{ uri: item.strTeamBadge }} style={styles.image} resizeMode="contain" />
-              <View style={styles.info}>
-                <Text style={styles.title}>{item.strTeam}</Text>
-                <Text style={styles.subtitle}>Est. {item.intFormedYear}</Text>
-              </View>
-              <TouchableOpacity onPress={() => dispatch(toggleFavorite(item))}>
-                <Feather name="trash-2" size={24} color="red" />
-              </TouchableOpacity>
-            </View>
-          )}
+          renderItem={({ item }: { item: any }) => {
+            // 2. FIX: Apply the same fallback logic here for the list item
+            const badgeUrl = item.strTeamBadge || item.strBadge || `https://www.thesportsdb.com/images/media/team/badge/${item.idTeam}.png`;
+
+            return (
+                <TouchableOpacity onPress={() => goToDetails(item)} activeOpacity={0.9}>
+                    <View style={styles.card}>
+                    {/* Use 'badgeUrl' instead of 'item.strTeamBadge' */}
+                    <Image source={{ uri: badgeUrl }} style={styles.image} resizeMode="contain" />
+                    
+                    <View style={styles.info}>
+                        <Text style={styles.title}>{item.strTeam}</Text>
+                        <Text style={styles.subtitle}>Est. {item.intFormedYear}</Text>
+                    </View>
+                    
+                    <TouchableOpacity onPress={() => dispatch(toggleFavorite(item))} style={styles.favBtn}>
+                        <Feather name="trash-2" size={24} color="red" />
+                    </TouchableOpacity>
+                    </View>
+                </TouchableOpacity>
+            );
+          }}
         />
       )}
     </View>
@@ -50,8 +71,8 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 10,
     alignItems: 'center',
-    elevation: 3, // Android shadow
-    shadowColor: '#000', // iOS shadow
+    elevation: 3,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -60,4 +81,5 @@ const styles = StyleSheet.create({
   info: { flex: 1 },
   title: { fontSize: 18, fontWeight: 'bold', color: '#333' },
   subtitle: { fontSize: 14, color: '#666', marginTop: 4 },
+  favBtn: { padding: 5 },
 });

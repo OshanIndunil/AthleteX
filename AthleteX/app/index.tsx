@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRouter } from 'expo-router';
 import { useDispatch } from 'react-redux';
-import { loginSuccess } from '../../redux/store'; 
+import { loginSuccess } from '../redux/store';
 import axios from 'axios';
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -18,7 +18,6 @@ const loginSchema = yup.object({
 export default function LoginScreen() {
   const router = useRouter();
   const dispatch = useDispatch();
-  
   const [loading, setLoading] = useState(false);
   const isSubmitting = useRef(false);
 
@@ -34,12 +33,8 @@ export default function LoginScreen() {
     const usernameInput = data.username.trim();
     const passwordInput = data.password.trim();
 
-    console.log("Attempting login:", usernameInput);
-
     // --- SUPER USER ---
     if (usernameInput.toLowerCase() === 'oshan' && passwordInput === 'Test#123') {
-        console.log("✅ Super user matched! Navigating...");
-        
         const adminUser = {
             id: 999,
             username: 'oshan',
@@ -51,11 +46,10 @@ export default function LoginScreen() {
         
         dispatch(loginSuccess({ user: adminUser, token: 'admin-token-123' }));
         
-        // SIMPLE NAVIGATION FIX
         setTimeout(() => {
-            console.log("Pushing to tabs...");
-            router.replace('/(tabs)'); 
-        }, 100);
+            setLoading(false);
+            router.replace('/home');
+        }, 50);
         return; 
     }
 
@@ -66,16 +60,14 @@ export default function LoginScreen() {
         password: passwordInput, 
       });
 
-      console.log("✅ API Login Success!");
       dispatch(loginSuccess({ user: response.data, token: response.data.token }));
       
       setTimeout(() => {
-        console.log("Pushing to tabs...");
-        router.replace('/(tabs)');
-      }, 100);
+        setLoading(false);
+        router.replace('/home');
+      }, 50);
       
     } catch (error) {
-      console.log("❌ Login Error");
       isSubmitting.current = false;
       setLoading(false);
       Alert.alert("Login Failed", "Invalid username or password.");
@@ -83,18 +75,13 @@ export default function LoginScreen() {
   };
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === "ios" ? "padding" : "height"} 
-      style={{ flex: 1 }}
-    >
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <LinearGradient colors={['#007bff', '#0056b3']} style={styles.header}>
-            <Image 
-                source={{ uri: 'https://cdn-icons-png.flaticon.com/512/732/732205.png' }} 
-                style={styles.logo} 
-            />
+            <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/732/732205.png' }} style={styles.logo} />
             <Text style={styles.headerTitle}>Welcome Back!</Text>
-            <Text style={styles.headerSubtitle}>Login to continue to Sportify</Text>
+            {/* UPDATED TEXT HERE */}
+            <Text style={styles.headerSubtitle}>Login to continue to AthleteX</Text>
         </LinearGradient>
 
         <View style={styles.formContainer}>
@@ -105,14 +92,7 @@ export default function LoginScreen() {
                     control={control}
                     name="username"
                     render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.input}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        placeholder="Oshan"
-                        autoCapitalize="none"
-                    />
+                    <TextInput style={styles.input} onBlur={onBlur} onChangeText={onChange} value={value} placeholder="Oshan" autoCapitalize="none" />
                     )}
                 />
             </View>
@@ -125,14 +105,7 @@ export default function LoginScreen() {
                     control={control}
                     name="password"
                     render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.input}
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        secureTextEntry
-                        placeholder="Test#123"
-                    />
+                    <TextInput style={styles.input} onBlur={onBlur} onChangeText={onChange} value={value} secureTextEntry placeholder="Test#123" />
                     )}
                 />
             </View>
